@@ -1,0 +1,68 @@
+#
+# pin configurations for the project
+#
+# Author: liu benyuan <liubenyuan@gmail.com>
+# Date  : 2013-04-22
+#
+
+#============ clock region and reset ===================
+## Clock pin
+# NET CLKIN LOC = K15 | IOSTANDARD = "LVCMOS33"; # 66.666 MHz
+NET CLKIN LOC = C10 | IOSTANDARD = "LVCMOS33"; # 100 MHz
+## Reset button (Pull Down is required, atk by lby, see UG)
+NET RST LOC = V4 | IOSTANDARD = "LVCMOS33" | TIG | PULLDOWN;
+
+#============ LEDs for debug purpose ==================
+NET GPIO_LED1 LOC = P4 | IOSTANDARD = "LVCMOS33"; # D2
+NET GPIO_LED2 LOC = L6 | IOSTANDARD = "LVCMOS33"; # D3
+NET GPIO_LED3 LOC = F5 | IOSTANDARD = "LVCMOS33"; # D9
+NET GPIO_LED4 LOC = C2 | IOSTANDARD = "LVCMOS33"; # D10
+
+#============ J4 (right) =================================
+# AD2 Inputs
+NET "AD2_SCL" LOC = "E16" | IOSTANDARD = "LVCMOS33" | PULLUP;
+NET "AD2_SDA" LOC = "E18" | IOSTANDARD = "LVCMOS33" | PULLUP;
+# This is the clock for the AD2 Module, it's speed/accuracy isn't imperative,
+# so we mark to the system that in spite of being used as a clock, it
+# doesn't actually have to be routed with the other clock signals.
+NET "AD2_SCL" CLOCK_DEDICATED_ROUTE = FALSE;
+# ADXL345
+NET "ADXL_SCL" LOC = "F17" | IOSTANDARD = "LVCMOS33" | PULLUP;
+NET "ADXL_SDA" LOC = "F18" | IOSTANDARD = "LVCMOS33" | PULLUP;
+NET "ADXL_SDO" LOC = "K13" | IOSTANDARD = "LVCMOS33" | PULLUP; # PULLDOWN;
+NET "ADXL_CS"  LOC = "K12" | IOSTANDARD = "LVCMOS33" | PULLUP;
+NET "ADXL_SCL" CLOCK_DEDICATED_ROUTE = FALSE;
+#NET PMOD2<0> LOC = H12 | IOSTANDARD = "LVCMOS33"; #1
+#NET PMOD2<1> LOC = G13 | IOSTANDARD = "LVCMOS33"; #2
+#NET PMOD2<2> LOC = E16 | IOSTANDARD = "LVCMOS33"; #3
+#NET PMOD2<3> LOC = E18 | IOSTANDARD = "LVCMOS33"; #4
+#NET PMOD2<4> LOC = K12 | IOSTANDARD = "LVCMOS33"; #7
+#NET PMOD2<5> LOC = K13 | IOSTANDARD = "LVCMOS33"; #8
+#NET PMOD2<6> LOC = F17 | IOSTANDARD = "LVCMOS33"; #9
+#NET PMOD2<7> LOC = F18 | IOSTANDARD = "LVCMOS33"; #10
+#============ J5 (left) =================================
+NET RN42_RTS LOC = F15 | IOSTANDARD = "LVCMOS33"; #1
+NET RN42_RXD LOC = F16 | IOSTANDARD = "LVCMOS33"; #2
+NET RN42_TXD LOC = C17 | IOSTANDARD = "LVCMOS33"; #3
+NET RN42_CTS LOC = C18 | IOSTANDARD = "LVCMOS33"; #4
+NET RN42_STATUS LOC = F14 | IOSTANDARD = "LVCMOS33"; #7
+NET RN42_RST LOC = G14 | IOSTANDARD = "LVCMOS33"; #8
+#NET PMOD1<6> LOC = D17 | IOSTANDARD = "LVCMOS33"; #9
+#NET PMOD1<7> LOC = D18 | IOSTANDARD = "LVCMOS33"; #10
+#============= USB2UART ==========================
+NET USB_RS232_RXD LOC = R7 | IOSTANDARD = "LVCMOS33";
+NET USB_RS232_TXD LOC = T7 | IOSTANDARD = "LVCMOS33";
+# important
+# RN42 is on PMOD,      so RN42_RXD      is an input port for RN42,
+#                          RN42_TXD      is an output port of RN42,
+# USB_RS232 is on FPGA, so USB_RS232_TXD is an output port for FPGA
+#                          USB_RS232_RXD is an input port of FPGA
+
+#
+#
+#============ ADDITIONAL CONSTRAINS ========================
+## Clock frequency constraints
+NET "CLKIN" TNM_NET = sys_clk_pin;
+TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 100000 KHz;
+## Vccaux 3.3V
+CONFIG VCCAUX = 3.3;
