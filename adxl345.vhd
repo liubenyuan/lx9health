@@ -116,13 +116,13 @@ begin
                             end if;
                         -- I2C reg_op 2 --
                         when 3 =>                               -- command(3,4) REG_WRITE 'BW_RATE' 0x2C
-                            i2c_ena <= '1';                     -- where 0x0C denotes :
+                            i2c_ena <= '1';                     -- where 'sdata' denotes :
                             i2c_rw  <= '0';                     --     D3-D0(0xC) 400Hz, 200Hz BW mode
                             sdata   <= x"2C";                   --     D3-D0(0xB) 200Hz, 100Hz BW
                         when 4 =>                               --     D3-D0(0xA) 100Hz, 50Hz BW (default)
                             i2c_ena <= '1';
                             i2c_rw  <= '0';
-                            sdata   <= x"0C";
+                            sdata   <= x"0A";
                         when 5 =>                               -- command(5) stop
                             i2c_ena <= '0';
                             if i2c_busy='0' then

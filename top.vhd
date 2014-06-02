@@ -74,8 +74,8 @@ begin
     -- first stage divider (100MHz -> 400KHz)
     p1 : clkdiv generic map (RefValue => 124)
                 port map (clkin => clkin, clkout => clkdiv1, rst => rst);
-    -- second stage divider (400KHz -> 250Hz)
-    p2 : clkdiv generic map (RefValue => 799)
+    -- second stage divider (400KHz -> 100Hz)
+    p2 : clkdiv generic map (RefValue => 1999)
                 port map (clkin => clkdiv1, clkout => clkdiv2, rst => rst);
     -- now start our functional block
     sysclk <= clkin;
@@ -96,7 +96,7 @@ begin
                         port map (
                             clk => sysclk,
                             reset => rst,
-                            trigger => adc_trigger,
+                            trigger => token_adc,
                             data => adc_dout,
                             valid => adc_valid,
                             sda => AD2_SDA,
@@ -109,7 +109,7 @@ begin
                         port map (
                             clk => sysclk,
                             reset => rst,
-                            trigger => adc_trigger,
+                            trigger => token_adxl,
                             data => adxl_dout,
                             valid => adxl_valid,
                             sda => ADXL_SDA,
