@@ -122,7 +122,7 @@ begin
                         when 4 =>                               --     D3-D0(0xA) 100Hz, 50Hz BW (default)
                             i2c_ena <= '1';
                             i2c_rw  <= '0';
-                            sdata   <= x"0A";
+                            sdata   <= x"0B";
                         when 5 =>                               -- command(5) stop
                             i2c_ena <= '0';
                             if i2c_busy='0' then
