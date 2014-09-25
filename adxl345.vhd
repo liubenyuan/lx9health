@@ -120,9 +120,9 @@ begin
                             i2c_rw  <= '0';                     --     D3-D0(0xC) 400Hz, 200Hz BW mode
                             sdata   <= x"2C";                   --     D3-D0(0xB) 200Hz, 100Hz BW
                         when 4 =>                               --     D3-D0(0xA) 100Hz, 50Hz BW (default)
-                            i2c_ena <= '1';
+                            i2c_ena <= '1';                     --     D3-D0(0x9) 50Hz, 25Hz BW
                             i2c_rw  <= '0';
-                            sdata   <= x"0B";
+                            sdata   <= x"09";
                         when 5 =>                               -- command(5) stop
                             i2c_ena <= '0';
                             if i2c_busy='0' then
