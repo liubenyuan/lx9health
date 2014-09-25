@@ -71,11 +71,11 @@ architecture rtl of top is
     signal uart_in_stb, uart_in_ack : std_logic;
 
 begin
-    -- first stage divider (100MHz -> 400KHz)
-    p1 : clkdiv generic map (RefValue => 124)
+    -- first stage divider (100MHz -> 200KHz) {orig:400K}
+    p1 : clkdiv generic map (RefValue => 249)
                 port map (clkin => clkin, clkout => clkdiv1, rst => rst);
-    -- second stage divider (400KHz -> 125Hz)
-    p2 : clkdiv generic map (RefValue => 1599)
+    -- second stage divider (200KHz -> 25Hz) {orig:125Hz}
+    p2 : clkdiv generic map (RefValue => 3999)
                 port map (clkin => clkdiv1, clkout => clkdiv2, rst => rst);
     -- now start our functional block
     sysclk <= clkin;
